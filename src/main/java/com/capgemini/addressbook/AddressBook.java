@@ -9,5 +9,6 @@ public class AddressBook {
 		Scanner sc = new Scanner(System.in);
 		AddressBookMain addressBookMain = new AddressBookMain();
 		addressBookMain.addContactPerson(sc);
+		addressBookMain.editContactPerson(sc);
 	}
 }

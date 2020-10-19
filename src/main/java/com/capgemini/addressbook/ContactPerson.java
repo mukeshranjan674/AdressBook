@@ -1,5 +1,11 @@
 package com.capgemini.addressbook;
 
+/**
+ * UC2
+ * 
+ * @author LENOVO
+ *
+ */
 class ContactPerson {
 
 	private String firstName;
