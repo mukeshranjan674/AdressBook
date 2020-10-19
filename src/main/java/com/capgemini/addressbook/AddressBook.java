@@ -32,7 +32,7 @@ public class AddressBook {
 			System.out.println("\n3. Show names of Address Books");
 			System.out.println("\n4. View persons by city or state");
 			System.out.println("\n5. Show Count of persons by city or state");
-			System.out.println("\n6. Sort By First Name");
+			System.out.println("\n6. Sort");
 			System.out.println("\n7. Exit");
 			System.out.println("\nEnter your choice");
 			int choice = sc.nextInt();
