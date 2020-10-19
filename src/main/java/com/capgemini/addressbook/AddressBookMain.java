@@ -25,6 +25,9 @@ public class AddressBookMain {
 		return contactPersonList;
 	}
 
+	public void setContactPersonList(List<ContactPerson> contactPersonList) {
+		this.contactPersonList = contactPersonList;
+	}
 	/**
 	 * UC6
 	 * 
@@ -166,4 +169,10 @@ public class AddressBookMain {
 		}
 		return false;
 	}
+
+	@Override
+	public String toString() {
+		return "AddressBookMain contactPersonList=" + contactPersonList;
+	}
+
 }

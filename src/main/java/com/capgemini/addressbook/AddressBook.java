@@ -33,7 +33,9 @@ public class AddressBook {
 			System.out.println("\n4. View persons by city or state");
 			System.out.println("\n5. Show Count of persons by city or state");
 			System.out.println("\n6. Sort");
-			System.out.println("\n7. Exit");
+			System.out.println("\n7. Write to a file");
+			System.out.println("\n8. Read from a file");
+			System.out.println("\n9. Exit");
 			System.out.println("\nEnter your choice");
 			int choice = sc.nextInt();
 
@@ -74,13 +76,20 @@ public class AddressBook {
 				a.sort(sc);
 				break;
 			case 7:
+				new AddressBookFileIO().writeAddressBooks(a.addressBooks);
+				break;
+			case 8:
+				Map<String, AddressBookMain> mapFromFile = new AddressBookFileIO().readData();
+				System.out.println(mapFromFile);
+				break;
+			case 9:
 				break;
 
 			default:
 				System.err.println("Please enter correct option :");
 				continue;
 			}
-			if (choice == 7)
+			if (choice == 9)
 				break;
 		}
 		System.out.println("\nThank You !!!");
@@ -286,5 +295,10 @@ public class AddressBook {
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public String toString() {
+		return "AddressBook addressBooks=" + addressBooks;
 	}
 }

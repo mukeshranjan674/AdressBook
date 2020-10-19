@@ -1,0 +1,23 @@
+Book1 AddressBookMain contactPersonList=[
+ Name Ram Kumar
+ Address Sijua
+ city Dhanbad
+ state jharkhand
+ zip 800001
+ Phone 8989898989
+ email abn@gmail.com]
+Book2 AddressBookMain contactPersonList=[
+ Name Shyam kumar
+ Address jamshedpur
+ city jamshedpur
+ state jharkhand
+ zip 831014
+ Phone 8989898989
+ email shyam@gmail.com, 
+ Name Krishna kumar
+ Address sijua
+ city dhanbad
+ state jharkhand
+ zip 8985585
+ Phone 8787878787
+ email krishna@gmail.com]
