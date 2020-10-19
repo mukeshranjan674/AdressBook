@@ -5,24 +5,37 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.TreeMap;
 import java.util.function.Predicate;
 
 public class AddressBookMain {
 
 	private List<ContactPerson> contactPersonList;
-	private Map<String, ContactPerson> contactPersonMap;
+	private Map<String, ContactPerson> addressBookByName;
+	private Map<String, ContactPerson> addressBookByCity;
+	private Map<String, ContactPerson> addressBookByState;
 
 	public AddressBookMain() {
 		contactPersonList = new ArrayList<ContactPerson>();
-		contactPersonMap = new HashMap<String, ContactPerson>();
+		addressBookByName = new HashMap<String, ContactPerson>();
+		addressBookByCity = new TreeMap<String, ContactPerson>();
+		addressBookByState = new TreeMap<String, ContactPerson>();
+	}
+
+	public Map<String, ContactPerson> getAddressBookByName() {
+		return addressBookByName;
+	}
+
+	public Map<String, ContactPerson> getAddressBookByCity() {
+		return addressBookByCity;
+	}
+
+	public Map<String, ContactPerson> getAddressBookByState() {
+		return addressBookByState;
 	}
 
 	public List<ContactPerson> getContactPersonList() {
 		return contactPersonList;
-	}
-
-	public void setContactPersonList(List<ContactPerson> contactPersonList) {
-		this.contactPersonList = contactPersonList;
 	}
 
 	/**
@@ -57,7 +70,9 @@ public class AddressBookMain {
 			return;
 		}
 		contactPersonList.add(c);
-		contactPersonMap.put(c.getFirstName(), c);
+		addressBookByName.put(c.getFirstName(), c);
+		addressBookByCity.put(c.getCity(), c);
+		addressBookByState.put(c.getState(), c);
 		System.out.println("Contact Added");
 	}
 
@@ -80,7 +95,7 @@ public class AddressBookMain {
 	 */
 	public void editContactPerson(Scanner sc) {
 		System.out.println("Enter First Name of the person to be edited :");
-		ContactPerson cp = contactPersonMap.get(sc.next());
+		ContactPerson cp = addressBookByName.get(sc.next());
 		System.out.println("Here is the Person Details to be edited " + cp);
 		System.out.println("Enter new Address :");
 		cp.setAddress(sc.next());
@@ -106,7 +121,15 @@ public class AddressBookMain {
 	public void deleteContactPerson(Scanner sc) {
 		System.out.println("Enter the first name to delete the contact details");
 		String name = sc.next();
-		contactPersonMap.remove(name);
+		addressBookByName.remove(name);
+		addressBookByCity.forEach((k, v) -> {
+			if (v.getFirstName().equals(name))
+				addressBookByCity.remove(name);
+		});
+		addressBookByState.forEach((k, v) -> {
+			if (v.getFirstName().equals(name))
+				addressBookByState.remove(name);
+		});
 		for (int i = 0; i < contactPersonList.size(); i++) {
 			if (contactPersonList.get(i).getFirstName().equals(name)) {
 				contactPersonList.remove(i);
