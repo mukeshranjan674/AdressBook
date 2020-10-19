@@ -1,6 +1,7 @@
 package com.capgemini.addressbook;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -26,7 +27,8 @@ public class AddressBook {
 			System.out.println("\n3. Show names of Address Books");
 			System.out.println("\n4. View persons by city or state");
 			System.out.println("\n5. Show Count of persons by city or state");
-			System.out.println("\n6. Exit");
+			System.out.println("\n6. Sort By First Name");
+			System.out.println("\n7. Exit");
 			System.out.println("\nEnter your choice");
 			int choice = sc.nextInt();
 
@@ -64,15 +66,17 @@ public class AddressBook {
 				System.out.println("Showing Count of Persons by City and State");
 				a.countPerson();
 				break;
-
 			case 6:
+				a.sort();
+				break;
+			case 7:
 				break;
 
 			default:
 				System.out.println("Please enter correct option :");
 				continue;
 			}
-			if (choice == 6)
+			if (choice == 7)
 				break;
 		}
 		System.out.println("\nThank You !!!");
@@ -205,5 +209,15 @@ public class AddressBook {
 				}
 			});
 		});
+	}
+
+	/**
+	 * UC11
+	 */
+	public void sort() {
+		List<ContactPerson> list = new ArrayList<ContactPerson>();
+		addressBooks.values().forEach(n -> n.getContactPersonList().forEach(n1 -> list.add(n1)));
+		Collections.sort(list, (ContactPerson c1, ContactPerson c2) -> c1.getFirstName().compareTo(c2.getFirstName()));
+		list.forEach(n -> System.out.println(n));
 	}
 }
