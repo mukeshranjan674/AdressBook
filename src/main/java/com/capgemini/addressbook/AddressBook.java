@@ -5,6 +5,9 @@ import java.util.Scanner;
 import java.util.TreeMap;
 
 public class AddressBook {
+	/**
+	 * UC6
+	 */
 	public Map<String, AddressBookMain> addressBooks = new TreeMap<String, AddressBookMain>();
 
 	public static void main(String[] args) {

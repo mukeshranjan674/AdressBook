@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.function.Predicate;
 
 public class AddressBookMain {
 
@@ -50,9 +51,26 @@ public class AddressBookMain {
 		details[7] = sc.next();
 		ContactPerson c = new ContactPerson(details[0], details[1], details[2], details[3], details[4], details[5],
 				details[6], details[7]);
+
+		if (checkForDuplicateName(c)) {
+			System.out.println("Person already exist in the Address Book !!  Please try with a different name");
+			return;
+		}
 		contactPersonList.add(c);
 		contactPersonMap.put(c.getFirstName(), c);
 		System.out.println("Contact Added");
+	}
+
+	/**
+	 * UC7
+	 * 
+	 * @param person
+	 * @return
+	 */
+	public boolean checkForDuplicateName(ContactPerson person) {
+		Predicate<ContactPerson> compareName = n -> n.equals(person);
+		boolean value = contactPersonList.stream().anyMatch(compareName);
+		return value;
 	}
 
 	/**
