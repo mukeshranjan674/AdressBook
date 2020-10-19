@@ -10,5 +10,6 @@ public class AddressBook {
 		AddressBookMain addressBookMain = new AddressBookMain();
 		addressBookMain.addContactPerson(sc);
 		addressBookMain.editContactPerson(sc);
+		addressBookMain.deleteContactPerson(sc);
 	}
 }

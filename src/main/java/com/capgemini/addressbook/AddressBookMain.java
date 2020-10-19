@@ -16,6 +16,14 @@ public class AddressBookMain {
 		contactPersonMap = new HashMap<String, ContactPerson>();
 	}
 
+	public List<ContactPerson> getContactPersonList() {
+		return contactPersonList;
+	}
+
+	public void setContactPersonList(List<ContactPerson> contactPersonList) {
+		this.contactPersonList = contactPersonList;
+	}
+
 	/**
 	 * UC3
 	 * 
@@ -72,12 +80,20 @@ public class AddressBookMain {
 		System.out.println(cp);
 	}
 
-	public List<ContactPerson> getContactPersonList() {
-		return contactPersonList;
+	/**
+	 * UC4
+	 * 
+	 * @param name
+	 */
+	public void deleteContactPerson(Scanner sc) {
+		System.out.println("Enter the first name to delete the contact details");
+		String name = sc.next();
+		contactPersonMap.remove(name);
+		for (int i = 0; i < contactPersonList.size(); i++) {
+			if (contactPersonList.get(i).getFirstName().equals(name)) {
+				contactPersonList.remove(i);
+			}
+		}
+		System.out.println("Contact Deleted !!!");
 	}
-
-	public void setContactPersonList(List<ContactPerson> contactPersonList) {
-		this.contactPersonList = contactPersonList;
-	}
-
 }
