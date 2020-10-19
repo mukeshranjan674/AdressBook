@@ -96,4 +96,63 @@ public class AddressBookMain {
 		}
 		System.out.println("Contact Deleted !!!");
 	}
+
+	/**
+	 * UC5
+	 * 
+	 * @param a
+	 */
+	public void maintainAddressBook(AddressBookMain a, Scanner sc) {
+
+		while (true) {
+			System.out.println("\n1. Add Contact Details");
+			System.out.println("\n2. Edit Contact Details");
+			System.out.println("\n3. Delete Contact Details");
+			System.out.println("\n4. Exit");
+			System.out.println("\nEnter your choice");
+			int choice = sc.nextInt();
+
+			switch (choice) {
+			case 1:
+				while (true) {
+					a.addContactPerson(sc);
+					System.out.println("Want more transactions (y/n)");
+					String option1 = sc.next();
+					if ((option1.equals("y")))
+						continue;
+					else
+						break;
+				}
+				break;
+			case 2:
+				while (true) {
+					a.editContactPerson(sc);
+					System.out.println("Want more transactions (y/n)");
+					String option2 = sc.next();
+					if ((option2.equals("y")))
+						continue;
+					else
+						break;
+				}
+				break;
+			case 3:
+				while (true) {
+					a.deleteContactPerson(sc);
+					System.out.println("Want more transactions (y/n)");
+					String option3 = sc.next();
+					if ((option3.equals("y")))
+						continue;
+					else
+						break;
+				}
+				break;
+			default:
+				break;
+			}
+			if (choice == 4)
+				break;
+			else
+				System.out.println("Enter correct option");
+		}
+	}
 }

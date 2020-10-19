@@ -8,8 +8,6 @@ public class AddressBook {
 		System.out.println("***** Welcom to Address Book Program *****");
 		Scanner sc = new Scanner(System.in);
 		AddressBookMain addressBookMain = new AddressBookMain();
-		addressBookMain.addContactPerson(sc);
-		addressBookMain.editContactPerson(sc);
-		addressBookMain.deleteContactPerson(sc);
+		addressBookMain.maintainAddressBook(addressBookMain, sc);
 	}
 }
