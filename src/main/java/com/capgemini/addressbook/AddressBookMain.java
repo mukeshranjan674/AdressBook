@@ -99,7 +99,7 @@ public class AddressBookMain {
 	}
 
 	/**
-	 * UC4
+	 * UC5
 	 * 
 	 * @param name
 	 */
@@ -116,11 +116,11 @@ public class AddressBookMain {
 	}
 
 	/**
-	 * UC5
+	 * UC6
 	 * 
 	 * @param a
 	 */
-	public void maintainAddressBook(AddressBookMain a, Scanner sc) {
+	public void maintainAddressBook(Scanner sc) {
 
 		while (true) {
 			System.out.println("\n1. Add Contact Details");
@@ -133,7 +133,7 @@ public class AddressBookMain {
 			switch (choice) {
 			case 1:
 				while (true) {
-					a.addContactPerson(sc);
+					addContactPerson(sc);
 					System.out.println("Want more transactions (y/n)");
 					String option1 = sc.next();
 					if ((option1.equals("y")))
@@ -144,7 +144,7 @@ public class AddressBookMain {
 				break;
 			case 2:
 				while (true) {
-					a.editContactPerson(sc);
+					editContactPerson(sc);
 					System.out.println("Want more transactions (y/n)");
 					String option2 = sc.next();
 					if ((option2.equals("y")))
@@ -155,7 +155,7 @@ public class AddressBookMain {
 				break;
 			case 3:
 				while (true) {
-					a.deleteContactPerson(sc);
+					deleteContactPerson(sc);
 					System.out.println("Want more transactions (y/n)");
 					String option3 = sc.next();
 					if ((option3.equals("y")))
