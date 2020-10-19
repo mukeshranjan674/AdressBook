@@ -5,37 +5,60 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.TreeMap;
 import java.util.function.Predicate;
 
 public class AddressBookMain {
 
 	private List<ContactPerson> contactPersonList;
 	private Map<String, ContactPerson> addressBookByName;
-	private Map<String, ContactPerson> addressBookByCity;
-	private Map<String, ContactPerson> addressBookByState;
-
+	
 	public AddressBookMain() {
 		contactPersonList = new ArrayList<ContactPerson>();
 		addressBookByName = new HashMap<String, ContactPerson>();
-		addressBookByCity = new TreeMap<String, ContactPerson>();
-		addressBookByState = new TreeMap<String, ContactPerson>();
 	}
 
 	public Map<String, ContactPerson> getAddressBookByName() {
 		return addressBookByName;
 	}
 
-	public Map<String, ContactPerson> getAddressBookByCity() {
-		return addressBookByCity;
-	}
-
-	public Map<String, ContactPerson> getAddressBookByState() {
-		return addressBookByState;
-	}
-
 	public List<ContactPerson> getContactPersonList() {
 		return contactPersonList;
+	}
+
+	/**
+	 * UC6
+	 * 
+	 * @param a
+	 */
+	public void maintainAddressBook(Scanner sc) {
+
+		while (true) {
+			System.out.println("\n1. Add Contact Details");
+			System.out.println("\n2. Edit Contact Details");
+			System.out.println("\n3. Delete Contact Details");
+			System.out.println("\n4. Exit");
+			System.out.println("\nEnter your choice");
+			int choice = sc.nextInt();
+
+			switch (choice) {
+			case 1:
+				addContactPerson(sc);
+				break;
+			case 2:
+				editContactPerson(sc);
+				break;
+			case 3:
+				deleteContactPerson(sc);
+				break;
+			case 4:
+				break;
+			default:
+				System.out.println("Please enter correct option :");
+				continue;
+			}
+			if (choice == 4)
+				break;
+		}
 	}
 
 	/**
@@ -71,8 +94,6 @@ public class AddressBookMain {
 		}
 		contactPersonList.add(c);
 		addressBookByName.put(c.getFirstName(), c);
-		addressBookByCity.put(c.getCity(), c);
-		addressBookByState.put(c.getState(), c);
 		System.out.println("Contact Added");
 	}
 
@@ -94,8 +115,15 @@ public class AddressBookMain {
 	 * @param firstName
 	 */
 	public void editContactPerson(Scanner sc) {
+		if (checkListIsEmpty())
+			return;
 		System.out.println("Enter First Name of the person to be edited :");
-		ContactPerson cp = addressBookByName.get(sc.next());
+		String name = sc.next();
+		if (!(addressBookByName.containsKey(name))) {
+			System.out.println("No such person available !!");
+			return;
+		}
+		ContactPerson cp = addressBookByName.get(name);
 		System.out.println("Here is the Person Details to be edited " + cp);
 		System.out.println("Enter new Address :");
 		cp.setAddress(sc.next());
@@ -119,81 +147,23 @@ public class AddressBookMain {
 	 * @param name
 	 */
 	public void deleteContactPerson(Scanner sc) {
+		if (checkListIsEmpty())
+			return;
 		System.out.println("Enter the first name to delete the contact details");
 		String name = sc.next();
-		addressBookByName.remove(name);
-		addressBookByCity.forEach((k, v) -> {
-			if (v.getFirstName().equals(name))
-				addressBookByCity.remove(name);
-		});
-		addressBookByState.forEach((k, v) -> {
-			if (v.getFirstName().equals(name))
-				addressBookByState.remove(name);
-		});
-		for (int i = 0; i < contactPersonList.size(); i++) {
-			if (contactPersonList.get(i).getFirstName().equals(name)) {
-				contactPersonList.remove(i);
-			}
+		if (!(addressBookByName.containsKey(name))) {
+			System.out.println("No such person available !!");
+			return;
 		}
+		addressBookByName.remove(name);
 		System.out.println("Contact Deleted !!!");
 	}
 
-	/**
-	 * UC6
-	 * 
-	 * @param a
-	 */
-	public void maintainAddressBook(Scanner sc) {
-
-		while (true) {
-			System.out.println("\n1. Add Contact Details");
-			System.out.println("\n2. Edit Contact Details");
-			System.out.println("\n3. Delete Contact Details");
-			System.out.println("\n4. Exit");
-			System.out.println("\nEnter your choice");
-			int choice = sc.nextInt();
-
-			switch (choice) {
-			case 1:
-				while (true) {
-					addContactPerson(sc);
-					System.out.println("Want more transactions (y/n)");
-					String option1 = sc.next();
-					if ((option1.equals("y")))
-						continue;
-					else
-						break;
-				}
-				break;
-			case 2:
-				while (true) {
-					editContactPerson(sc);
-					System.out.println("Want more transactions (y/n)");
-					String option2 = sc.next();
-					if ((option2.equals("y")))
-						continue;
-					else
-						break;
-				}
-				break;
-			case 3:
-				while (true) {
-					deleteContactPerson(sc);
-					System.out.println("Want more transactions (y/n)");
-					String option3 = sc.next();
-					if ((option3.equals("y")))
-						continue;
-					else
-						break;
-				}
-				break;
-			default:
-				break;
-			}
-			if (choice == 4)
-				break;
-			else
-				System.out.println("Enter correct option");
+	public boolean checkListIsEmpty() {
+		if (contactPersonList.isEmpty()) {
+			System.out.println("Address Book is empty !!");
+			return true;
 		}
+		return false;
 	}
 }
