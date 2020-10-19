@@ -11,7 +11,7 @@ public class AddressBookMain {
 
 	private List<ContactPerson> contactPersonList;
 	private Map<String, ContactPerson> addressBookByName;
-	
+
 	public AddressBookMain() {
 		contactPersonList = new ArrayList<ContactPerson>();
 		addressBookByName = new HashMap<String, ContactPerson>();

@@ -16,6 +16,11 @@ public class AddressBook {
 	public Map<String, List<ContactPerson>> personsByState = new TreeMap<String, List<ContactPerson>>();
 	public Map<String, List<ContactPerson>> personsByCity = new TreeMap<String, List<ContactPerson>>();
 
+	/**
+	 * UC1
+	 * 
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		System.out.println("\n***** Welcome to Address Book Program *****\n");
 		Scanner sc = new Scanner(System.in);
@@ -63,17 +68,16 @@ public class AddressBook {
 				break;
 
 			case 5:
-				System.out.println("Showing Count of Persons by City and State");
 				a.countPerson();
 				break;
 			case 6:
-				a.sort();
+				a.sort(sc);
 				break;
 			case 7:
 				break;
 
 			default:
-				System.out.println("Please enter correct option :");
+				System.err.println("Please enter correct option :");
 				continue;
 			}
 			if (choice == 7)
@@ -95,7 +99,8 @@ public class AddressBook {
 	 */
 
 	public void searchPersonInCityOrState(Scanner sc) {
-
+		if (checkIfEmpty())
+			return;
 		List<ContactPerson> list = new ArrayList<ContactPerson>();
 		System.out.println("Enter Name of the person to search :");
 		String searchName = sc.next();
@@ -126,7 +131,7 @@ public class AddressBook {
 			return;
 		}
 		if (list.size() == 0)
-			System.out.println("No Persons Found !!");
+			System.err.println("No Persons Found !!");
 		else
 			list.forEach(System.out::println);
 	}
@@ -137,7 +142,8 @@ public class AddressBook {
 	 * @param sc
 	 */
 	private void viewPersonByCityOrState(Scanner sc) {
-
+		if (checkIfEmpty())
+			return;
 		System.out.println("Enter city or state");
 		String searchIn = sc.next();
 		if (searchIn.equalsIgnoreCase("city")) {
@@ -155,7 +161,7 @@ public class AddressBook {
 				v.stream().forEach(n -> System.out.println(n));
 			});
 		} else {
-			System.out.println("Wrong Input");
+			System.err.println("Wrong Input");
 			return;
 		}
 	}
@@ -164,6 +170,9 @@ public class AddressBook {
 	 * UC10
 	 */
 	public void countPerson() {
+		if (checkIfEmpty())
+			return;
+		System.out.println("Showing Count of Persons by City and State");
 		personsByCity = new TreeMap<String, List<ContactPerson>>();
 		createMapForCity();
 		System.out.println("Cities");
@@ -214,10 +223,68 @@ public class AddressBook {
 	/**
 	 * UC11
 	 */
-	public void sort() {
+	public void sort(Scanner sc) {
+		if (checkIfEmpty())
+			return;
+		while (true) {
+			System.out.println("Sort by : [Name] [City] [State] [Zip] \nEnter Option");
+			String sortOption = sc.next();
+			if (sortOption.equalsIgnoreCase("name")) {
+				sortByName();
+				break;
+			}
+			if (sortOption.equalsIgnoreCase("state")) {
+				sortByState();
+				break;
+			}
+			if (sortOption.equalsIgnoreCase("city")) {
+				sortByCity();
+				break;
+			}
+			if (sortOption.equalsIgnoreCase("zip")) {
+				sortByZip();
+				break;
+			} else
+				System.err.println("Enter correct option");
+		}
+	}
+
+	/**
+	 * UC12
+	 */
+	public void sortByName() {
 		List<ContactPerson> list = new ArrayList<ContactPerson>();
 		addressBooks.values().forEach(n -> n.getContactPersonList().forEach(n1 -> list.add(n1)));
 		Collections.sort(list, (ContactPerson c1, ContactPerson c2) -> c1.getFirstName().compareTo(c2.getFirstName()));
 		list.forEach(n -> System.out.println(n));
+	}
+
+	public void sortByCity() {
+		List<ContactPerson> list = new ArrayList<ContactPerson>();
+		addressBooks.values().forEach(n -> n.getContactPersonList().forEach(n1 -> list.add(n1)));
+		Collections.sort(list, (ContactPerson c1, ContactPerson c2) -> c1.getCity().compareTo(c2.getCity()));
+		list.forEach(n -> System.out.println(n));
+	}
+
+	public void sortByState() {
+		List<ContactPerson> list = new ArrayList<ContactPerson>();
+		addressBooks.values().forEach(n -> n.getContactPersonList().forEach(n1 -> list.add(n1)));
+		Collections.sort(list, (ContactPerson c1, ContactPerson c2) -> c1.getState().compareTo(c2.getState()));
+		list.forEach(n -> System.out.println(n));
+	}
+
+	public void sortByZip() {
+		List<ContactPerson> list = new ArrayList<ContactPerson>();
+		addressBooks.values().forEach(n -> n.getContactPersonList().forEach(n1 -> list.add(n1)));
+		Collections.sort(list, (ContactPerson c1, ContactPerson c2) -> c1.getZip().compareTo(c2.getZip()));
+		list.forEach(n -> System.out.println(n));
+	}
+
+	public boolean checkIfEmpty() {
+		if (addressBooks.entrySet().isEmpty()) {
+			System.err.println("No Address Book added yet !!");
+			return true;
+		}
+		return false;
 	}
 }
