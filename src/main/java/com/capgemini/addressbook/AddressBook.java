@@ -92,10 +92,10 @@ public class AddressBook {
 				a.sort(sc);
 				break;
 			case 8:
-				new AddressBookFileIO().writeAddressBooks(a.addressBooks, FileType.CSV);
+				new AddressBookFileIO().writeAddressBooks(a.addressBooks, FileType.JSON);
 				break;
 			case 9:
-				Map<String, AddressBookMain> mapFromFile = new AddressBookCSVFileIO().readData();
+				Map<String, AddressBookMain> mapFromFile = new AddressBookJsonFileIO().readData();
 				System.out.println(mapFromFile);
 				break;
 			case 10:

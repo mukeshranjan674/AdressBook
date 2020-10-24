@@ -38,7 +38,7 @@ public class AddressBookFileIO {
 		} else if (fileIO.equals(FileType.CSV)) {
 			new AddressBookCSVFileIO().writeAddressBooks(addressBooks);
 		} else {
-
+			new AddressBookJsonFileIO().writeAddressBooks(addressBooks);
 		}
 
 	}
