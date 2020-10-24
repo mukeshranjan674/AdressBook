@@ -9,9 +9,7 @@ import java.util.TreeMap;
 import java.util.function.Predicate;
 
 public class AddressBook {
-	/**
-	 * UC6
-	 */
+
 	public Map<String, AddressBookMain> addressBooks = new TreeMap<String, AddressBookMain>();
 	public Map<String, List<ContactPerson>> personsByState = new TreeMap<String, List<ContactPerson>>();
 	public Map<String, List<ContactPerson>> personsByCity = new TreeMap<String, List<ContactPerson>>();
@@ -21,6 +19,15 @@ public class AddressBook {
 	 * 
 	 * @param args
 	 */
+
+	public AddressBook() {
+		this.addressBooks = new AddressBookCSVFileIO().readData();
+	}
+
+	public enum FileType {
+		TEXT, CSV, JSON
+	}
+
 	public static void main(String[] args) {
 		System.out.println("\n***** Welcome to Address Book Program *****\n");
 		Scanner sc = new Scanner(System.in);
@@ -28,68 +35,77 @@ public class AddressBook {
 
 		while (true) {
 			System.out.println("\n1. Add a new Address Book");
-			System.out.println("\n2. Search a person in a city or state across all address books");
-			System.out.println("\n3. Show names of Address Books");
-			System.out.println("\n4. View persons by city or state");
-			System.out.println("\n5. Show Count of persons by city or state");
-			System.out.println("\n6. Sort");
-			System.out.println("\n7. Write to a file");
-			System.out.println("\n8. Read from a file");
-			System.out.println("\n9. Exit");
+			System.out.println("\n2. Edit Existing Address Book");
+			System.out.println("\n3. Search a person in a city or state across all address books");
+			System.out.println("\n4. Show names of Address Books");
+			System.out.println("\n5. View persons by city or state");
+			System.out.println("\n6. Show Count of persons by city or state");
+			System.out.println("\n7. Sort");
+			System.out.println("\n8. Write to a file");
+			System.out.println("\n9. Read from a file");
+			System.out.println("\n10. Exit");
 			System.out.println("\nEnter your choice");
 			int choice = sc.nextInt();
 
 			switch (choice) {
 			case 1:
-				while (true) {
-					System.out.println("Enter name of the Address Book");
-					String name = sc.next();
-					if (a.addressBooks.containsKey(name)) {
-						System.out.println("\nAddress Book already exists !!!\n");
-						continue;
-					} else {
-						AddressBookMain addressBookMain = new AddressBookMain();
-						a.addressBooks.put(name, addressBookMain);
-						System.out.println("\n In Address Book : " + name);
-						addressBookMain.maintainAddressBook(sc);
-						break;
-					}
+				System.out.println("Enter name of the Address Book");
+				String name = sc.next();
+				if (a.addressBooks.containsKey(name)) {
+					System.out.println("\nAddress Book already exists !!!\n");
+				} else {
+					AddressBookMain addressBookMain = new AddressBookMain();
+					a.addressBooks.put(name, addressBookMain);
+					System.out.println("\n In Address Book : " + name);
+					addressBookMain.maintainAddressBook(sc);
 				}
 				break;
 
 			case 2:
-				a.searchPersonInCityOrState(sc);
+				System.out.println("Enter name of the Address Book");
+				String nameOfBook = sc.next();
+				if (a.addressBooks.containsKey(nameOfBook)) {
+					AddressBookMain addressBookMain = a.addressBooks.get(nameOfBook);
+					System.out.println("\n In Address Book : " + nameOfBook);
+					addressBookMain.maintainAddressBook(sc);
+				} else {
+					System.err.println("No such Address Book Availble !!");
+				}
 				break;
 
 			case 3:
-				a.showAddressBooks();
+				a.searchPersonInCityOrState(sc);
 				break;
 
 			case 4:
-				a.viewPersonByCityOrState(sc);
+				a.showAddressBooks();
 				break;
 
 			case 5:
+				a.viewPersonByCityOrState(sc);
+				break;
+
+			case 6:
 				a.countPerson();
 				break;
-			case 6:
+			case 7:
 				a.sort(sc);
 				break;
-			case 7:
-				new AddressBookFileIO().writeAddressBooks(a.addressBooks);
-				break;
 			case 8:
-				Map<String, AddressBookMain> mapFromFile = new AddressBookFileIO().readData();
-				System.out.println(mapFromFile);
+				new AddressBookFileIO().writeAddressBooks(a.addressBooks, FileType.CSV);
 				break;
 			case 9:
+				Map<String, AddressBookMain> mapFromFile = new AddressBookCSVFileIO().readData();
+				System.out.println(mapFromFile);
+				break;
+			case 10:
 				break;
 
 			default:
 				System.err.println("Please enter correct option :");
 				continue;
 			}
-			if (choice == 9)
+			if (choice == 10)
 				break;
 		}
 		System.out.println("\nThank You !!!");

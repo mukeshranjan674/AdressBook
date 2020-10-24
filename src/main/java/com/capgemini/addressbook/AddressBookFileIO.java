@@ -9,25 +9,38 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import com.capgemini.addressbook.AddressBook.FileType;
+
 /**
  * UC13
+ * 
  * @author LENOVO
  *
  */
 public class AddressBookFileIO {
-	private static String FILE_NAME = "address-book-details.txt";
+	private static String FILE_NAME = "C:\\Users\\LENOVO\\eclipse-workspace"
+			+ "\\AddressBookProblem\\src\\AddressBooksData\\Text\\address-book-details.txt";
 
-	public void writeAddressBooks(Map<String, AddressBookMain> addressBooks) {
-		StringBuffer addressBuffer = new StringBuffer();
-		addressBooks.forEach((name, addressBook) -> {
-			String addressBookString = name + " " + addressBook.toString().concat("\n");
-			addressBuffer.append(addressBookString);
-		});
-		try {
-			Files.write(Paths.get(FILE_NAME), addressBuffer.toString().getBytes());
-		} catch (IOException e) {
-			e.printStackTrace();
+	public void writeAddressBooks(Map<String, AddressBookMain> addressBooks, FileType fileIO) {
+		if (fileIO.equals(FileType.TEXT)) {
+			StringBuffer addressBuffer = new StringBuffer();
+			addressBooks.forEach((name, addressBook) -> {
+				String addressBookString = name + " " + addressBook.toString().concat("\n");
+				addressBuffer.append(addressBookString);
+			});
+			try {
+				if (!Files.exists(Paths.get(FILE_NAME)))
+					Files.createFile(Paths.get(FILE_NAME));
+				Files.write(Paths.get(FILE_NAME), addressBuffer.toString().getBytes());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} else if (fileIO.equals(FileType.CSV)) {
+			new AddressBookCSVFileIO().writeAddressBooks(addressBooks);
+		} else {
+
 		}
+
 	}
 
 	public Map<String, AddressBookMain> readData() {

@@ -27,7 +27,9 @@ public class AddressBookMain {
 
 	public void setContactPersonList(List<ContactPerson> contactPersonList) {
 		this.contactPersonList = contactPersonList;
+		createMap();
 	}
+
 	/**
 	 * UC6
 	 * 
@@ -158,6 +160,14 @@ public class AddressBookMain {
 			System.out.println("No such person available !!");
 			return;
 		}
+		int index = 0;
+		for (ContactPerson c : contactPersonList) {
+			if (c.getFirstName().equals(name)) {
+				contactPersonList.remove(index);
+				break;
+			}
+			index++;
+		}
 		addressBookByName.remove(name);
 		System.out.println("Contact Deleted !!!");
 	}
@@ -168,6 +178,14 @@ public class AddressBookMain {
 			return true;
 		}
 		return false;
+	}
+
+	public void createMap() {
+		if (contactPersonList.size() != 0) {
+			for (ContactPerson c : contactPersonList) {
+				addressBookByName.put(c.getFirstName(), c);
+			}
+		}
 	}
 
 	@Override
